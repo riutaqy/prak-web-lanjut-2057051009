@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,35 +34,45 @@
             transform: scale(1.05);
         }
 
-        .logo {
+        .img-bx {
             margin-bottom: 20px;
         }
 
-        .logo img {
+        .img-bx img {
             width: 120px;
         }
 
-        .name, .npm, .kelas {
-            font-size: 20px;
-            margin: 10px 0;
+        .detail h2 {
+            font-size: 20px; /* Ukuran font yang sama untuk nama, npm, dan kelas */
             font-weight: bold;
             color: #333;
+            line-height: 1.5;
         }
 
         /* Efek bayangan untuk teks */
-        .name, .npm, .kelas {
+        .detail h2 {
             text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
+
 <body>
+
     <div class="card">
-        <div class="logo">
-            <img src="https://laravel.com/img/logomark.min.svg" alt="Laravel Logo">
+        <div class="img-bx">
+            <img src="{{ asset('assets/Laravel.svg.png') }}" alt="img" />
         </div>
-        <div class="name">{{ $nama }}</div>
-        <div class="npm">{{ $npm }}</div>
-        <div class="kelas">{{ $kelas }}</div>
+        <div class="content">
+            <div class="detail">
+                <h2>
+                    {{ $nama }}<br />
+                    {{ $npm }}<br />
+                    {{ $nama_kelas ?? 'Kelas tidak ditemukan' }}
+                </h2>
+            </div>
+        </div>
     </div>
+
 </body>
+
 </html>
