@@ -1,155 +1,132 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
+@section('content')
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Create User</title>
+    <title>Modul 3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #FAD6A5, #FF8C42); /* Smooth gradient background */
-            height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background-color: #a2d5f2;
+            margin: 0;
+            height: 110vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0;
         }
 
         .card {
-            background: white;
-            padding: 40px;
-            border-radius: 15px; /* Rounded corners */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
             width: 400px;
-            text-align: center;
-            position: relative;
+            max-width: 100%;
+            padding: 20px;
+        }
+
+        .form-container {
+            width: 100%;
         }
 
         h2 {
-            margin-bottom: 20px;
+            text-align: center;
             font-size: 24px;
             color: #333;
-            font-weight: bold;
+            margin-bottom: 20px;
         }
 
         .form-group {
-            margin-bottom: 20px;
-            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            width: 100%;
         }
 
         label {
-            font-size: 14px;
-            font-weight: bold;
-            color: #555;
+            font-weight: 500;
+            color: #333;
+            flex-basis: 30%;
+            text-align: left;
         }
 
         input[type="text"],
         select {
-            width: 100%;
-            padding: 12px;
-            margin-top: 5px;
+            width: 65%;
+            padding: 8px;
+            border-radius: 5px;
             border: 1px solid #ccc;
-            border-radius: 10px; /* Rounded input fields */
-            font-size: 16px;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
         }
 
-        input[type="text"]:focus,
-        select:focus {
-            outline: none;
-            border-color: #FF8C42;
-            box-shadow: 0 0 8px rgba(255, 140, 66, 0.5); /* Orange focus effect */
-        }
-
-        button {
-            background: #FF8C42;
+        input[type="submit"] {
+            background-color: #0d6efd;
             color: white;
-            padding: 12px 30px;
             border: none;
-            border-radius: 10px; /* Rounded button */
-            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background 0.3s ease, box-shadow 0.3s ease;
-            margin-top: 20px;
-            width: 100%;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 0 auto;
         }
 
-        button:hover {
-            background: #e67e22;
-            box-shadow: 0 10px 20px rgba(255, 140, 66, 0.3); /* Soft hover shadow */
+        input[type="submit"]:hover {
+            background-color: #094ca1;
         }
 
-        /* Decorative circles */
-        .blob {
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            background: rgba(255, 140, 66, 0.2);
-            border-radius: 50%;
-            top: -30px;
-            right: -40px;
-        }
-
-        .blob2 {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: rgba(250, 214, 165, 0.3);
-            border-radius: 50%;
-            bottom: -30px;
-            left: -30px;
-        }
-
-        .error {
-            color: red;
+        .text-danger {
+            color: #ff0000;
             font-size: 12px;
+            margin-top: -10px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
+
 <body>
     <div class="card">
-        <div class="blob"></div>
-        <div class="blob2"></div>
-        <h2>Create User</h2>
+        <div class="form-container">
+            <h2>Create User</h2> 
+            <form action="{{ route('user.store') }}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <label for="nama">Nama:</label>
+                    <input type="text" id="nama" name="nama" placeholder="Masukkan Nama">
+                </div>
+                @foreach($errors->get('nama') as $msg)
+                <p class="text-danger">{{ $msg }}</p>
+                @endforeach
 
-        <form action="{{ route('user.store') }}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="nama">Nama:</label>
-                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" >
-                @error('nama')
-                    <div class="error">{{ $message }}</div>
-                @enderror
-            </div>
+                <div class="form-group">
+                    <label for="npm">NPM:</label>
+                    <input type="text" id="npm" name="npm" placeholder="Masukkan NPM">
+                </div>
+                @foreach($errors->get('npm') as $msg)
+                <p class="text-danger">{{ $msg }}</p>
+                @endforeach
 
-            <div class="form-group">
-                <label for="npm">NPM:</label>
-                <input type="text" id="npm" name="npm" value="{{ old('npm') }}" >
-                @error('npm')
-                    <div class="error">{{ $message }}</div>
-                @enderror
-            </div>
+                <div class="form-group">
+                    <label for="id_kelas">Kelas:</label>
+                    <select name="kelas_id" id="kelas_id" required>
+                        @foreach ($kelas as $kelasItem)
+                        <option value="{{ $kelasItem->id }}">{{ $kelasItem->nama_kelas }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label for="kelas">Kelas:</label>
-                <select name="kelas_id" id="kelas_id">
-                    @foreach ($kelas as $kelasItem)
-                    <option value="{{ $kelasItem->id }}" {{ old('kelas_id') == $kelasItem->id ? 'selected' : '' }}>
-                        {{ $kelasItem->nama_kelas }}
-                    </option>
-                    @endforeach
-                </select>
-                @error('kelas_id')
-                    <div class="error">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="form-group">
-                <button type="submit">Submit</button>
-            </div>
-        </form>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
     </div>
-</body>
-</html>
+@endsection
